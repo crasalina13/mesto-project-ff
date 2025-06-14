@@ -9,7 +9,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'scripts/main.js',
-    publicPath: '/'
+    publicPath: './'
   },
   mode: 'development',
   devServer: {
