@@ -1,6 +1,6 @@
 import '../pages/index.css';
-import { getUserInfo, getInitialCards, updateUserInfo, addNewCard, deleteCard, addLike, removeLike, updateAvatar } from './api.js';
-import { createCard } from './card.js';
+import { getUserInfo, getInitialCards, updateUserInfo, addNewCard, updateAvatar } from './api.js';
+import { createCard, handleLikeClick, handleDeleteClick } from './card.js';
 import { openModal, closeModal } from './modal.js';
 import { getUserInfo as getLocalUserInfo, setUserInfo, getCurrentUserId } from './userInfo.js';
 import { enableValidation, clearValidation } from './validation.js';
@@ -35,42 +35,21 @@ popups.forEach((item) => {
   item.classList.add('popup_is-animated');
 });
 
+const popupImage = imageModal.querySelector('.popup__image');
+const popupCaption = imageModal.querySelector('.popup__caption');
+
 function handleCardClick(name, link) {
-  const popupImage = imageModal.querySelector('.popup__image');
-  const popupCaption = imageModal.querySelector('.popup__caption');
-  
   popupImage.src = link;
   popupImage.alt = name;
   popupCaption.textContent = name;
-  
   openModal(imageModal);
-}
-
-function handleLikeClick(evt, cardId, likeCountElement) {
-  const isLiked = evt.target.classList.contains('card__like-button_is-active');
-  const likeAction = isLiked ? removeLike : addLike;
-  
-  likeAction(cardId)
-    .then(cardData => {
-      likeCountElement.textContent = cardData.likes.length;
-      evt.target.classList.toggle('card__like-button_is-active');
-    })
-    .catch(err => console.log(err));
-}
-
-function handleDeleteClick(cardId, cardElement) {
-  deleteCard(cardId)
-    .then(() => {
-      cardElement.remove();
-    })
-    .catch(err => console.log(err));
 }
 
 function renderCard(cardData) {
   const cardElement = createCard(
-    cardData, 
-    handleCardClick, 
-    handleDeleteClick, 
+    cardData,
+    handleCardClick,
+    handleDeleteClick,
     handleLikeClick,
     getCurrentUserId()
   );

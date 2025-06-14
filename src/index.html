@@ -56,7 +56,9 @@
                         minlength="2"
                         maxlength="40"
                         pattern="[а-яА-ЯёЁa-zA-Z\s\-]+"
-                        data-error="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+                        data-error-required="Вы пропустили это поле"
+                        data-error-too-short="Минимальное количество символов 2. Длина текста сейчас {length} символ."
+                        data-error-pattern="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
                 >
                 <span class="name-input-error popup__error"></span>
                 <input
@@ -69,7 +71,9 @@
                         minlength="2"
                         maxlength="200"
                         pattern="[а-яА-ЯёЁa-zA-Z\s\-]+"
-                        data-error="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+                        data-error-required="Вы пропустили это поле"
+                        data-error-too-short="Минимальное количество символов 2. Длина текста сейчас {length} символ."
+                        data-error-pattern="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
                 >
                 <span class="description-input-error popup__error"></span>
                 <button type="submit" class="button popup__button">Сохранить</button>
@@ -92,7 +96,9 @@
                         minlength="2"
                         maxlength="30"
                         pattern="[а-яА-ЯёЁa-zA-Z\s\-]+"
-                        data-error="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+                        data-error-required="Вы пропустили это поле"
+                        data-error-too-short="Минимальное количество символов 2. Длина текста сейчас {length} символ."
+                        data-error-pattern="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
                 >
                 <span class="card-name-input-error popup__error"></span>
                 <input
@@ -102,6 +108,8 @@
                         class="popup__input popup__input_type_url"
                         placeholder="Ссылка на картинку"
                         required
+                        data-error-required="Вы пропустили это поле"
+                        data-error-type="Введите адрес сайта."
                 >
                 <span class="url-input-error popup__error"></span>
                 <button type="submit" class="button popup__button">Сохранить</button>
@@ -129,6 +137,8 @@
                     class="popup__input popup__input_type_avatar-url"
                     placeholder="Ссылка на аватар"
                     required
+                    data-error-required="Вы пропустили это поле"
+                    data-error-type="Введите адрес сайта."
             >
             <span class="avatar-url-input-error popup__error"></span>
             <button type="submit" class="button popup__button">Сохранить</button>

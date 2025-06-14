@@ -1,3 +1,24 @@
+import { addLike, removeLike, deleteCard } from './api.js';
+
+export function handleLikeClick(evt, cardId, likeCountElement) {
+  const likeButton = evt.target;
+  const isLiked = likeButton.classList.contains('card__like-button_is-active');
+  const likeAction = isLiked ? removeLike : addLike;
+
+  likeAction(cardId)
+    .then(cardData => {
+      likeCountElement.textContent = cardData.likes.length;
+      likeButton.classList.toggle('card__like-button_is-active');
+    })
+    .catch(console.log);
+}
+
+export function handleDeleteClick(cardId, cardElement) {
+  deleteCard(cardId)
+    .then(() => cardElement.remove())
+    .catch(console.log);
+}
+
 export function createCard(cardData, handleCardClick, handleDeleteClick, handleLikeClick, currentUserId) {
   const cardTemplate = document.querySelector('#card-template').content.querySelector('.card');
   const cardElement = cardTemplate.cloneNode(true);

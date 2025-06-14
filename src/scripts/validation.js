@@ -62,22 +62,34 @@ export function clearValidation(formElement, config) {
 }
 
 function checkInputValidity(formElement, inputElement, config) {
-  let errorMessage = "";
+  inputElement.setCustomValidity('');
 
-  if (inputElement.validity.valueMissing) {
-    errorMessage = "Вы пропустили это поле";
-  } else if (inputElement.validity.tooShort) {
-    errorMessage = `Минимальное количество символов ${inputElement.minLength}. Длина текста сейчас ${inputElement.value.length} символ`;
-  } else if (inputElement.validity.patternMismatch) {
-    errorMessage = inputElement.dataset.error || "Неверный формат";
-  } else if (inputElement.validity.typeMismatch) {
-    errorMessage = inputElement.dataset.error || "Введите адрес сайта.";
+  const errorMessages = {
+    valueMissing: inputElement.dataset.errorRequired,
+    tooShort: inputElement.dataset.errorTooShort,
+    patternMismatch: inputElement.dataset.errorPattern,
+    typeMismatch: inputElement.dataset.errorType,
+    customError: inputElement.dataset.error
+  };
+
+  const validityKeys = ['valueMissing', 'tooShort', 'patternMismatch', 'typeMismatch', 'customError'];
+  const errorType = validityKeys.find(key => inputElement.validity[key] && errorMessages[key]);
+
+  let finalMessage = '';
+
+  if (errorType) {
+    finalMessage = errorMessages[errorType];
+    if (errorType === 'tooShort') {
+      finalMessage = finalMessage
+        .replace('{min}', inputElement.minLength)
+        .replace('{length}', inputElement.value.length);
+    }
+
+    inputElement.setCustomValidity(finalMessage);
   }
 
-  inputElement.setCustomValidity(errorMessage);
-
   if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage, config);
+    showInputError(formElement, inputElement, finalMessage, config);
   } else {
     hideInputError(formElement, inputElement, config);
   }
